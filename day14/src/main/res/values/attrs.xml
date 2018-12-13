@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="Battery">
+        <attr name="batteryOrientation">
+            <enum name="horizontal" value="0"></enum>
+            <enum name="vertical" value="1"></enum>
+        </attr>
+        <attr name="batteryColor" format="color"></attr>
+        <attr name="batteryPower" format="integer"></attr>
+    </declare-styleable>
+</resources>
