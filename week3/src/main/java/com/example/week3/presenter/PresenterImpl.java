@@ -1,27 +1,18 @@
-package com.example.moni3.presenter;
+package com.example.week3.presenter;
 
-import com.example.moni3.model.ModelImpl;
-import com.example.moni3.model.MyCallBack;
-import com.example.moni3.view.Iview;
+import com.example.week3.model.ModelImpl;
+import com.example.week3.model.MyCallBack;
+import com.example.week3.view.Iview;
 
 import java.util.Map;
 
-public class PresenterImpl implements Ipresenter{
+public class PresenterImpl implements Ipresenter {
     private Iview iView;
     private ModelImpl model;
 
     public PresenterImpl(Iview iview) {
         iView = iview;
         model = new ModelImpl();
-    }
-
-    public void onDetach(){
-        if(model!=null){
-            model = null;
-        }
-        if(iView!=null){
-            iView = null;
-        }
     }
 
     @Override
@@ -33,4 +24,14 @@ public class PresenterImpl implements Ipresenter{
             }
         });
     }
+
+    public void onDetach(){
+        if(model!=null){
+            model = null;
+        }
+        if(iView!=null){
+            iView = null;
+        }
+    }
+
 }

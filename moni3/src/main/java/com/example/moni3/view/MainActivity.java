@@ -69,6 +69,47 @@ public class MainActivity extends AppCompatActivity implements Iview{
             }
         });
         initData();
+        adapter.setItemOnClickListener(new MainAdapter.onClickCallBack() {
+            @Override
+            public void setItemOnClick(View item, int i) {
+                ObjectAnimator alpha = ObjectAnimator.ofFloat(item,"alpha",1f,0f,1f);
+                alpha.setDuration(3000);
+                alpha.start();
+            }
+        });
+        adapter.setLongItemOnClickListener(new MainAdapter.onLongClickCallBack() {
+            @Override
+            public void setLongItemOnClick(final int i) {
+                final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder.setTitle("删除......");
+                builder.setMessage("确认删除么？");
+                builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        adapter.delDate(i);
+                    }
+                });
+                builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+                builder.show();
+            }
+        });
+        //点击头像设置动画
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ObjectAnimator scaleX = ObjectAnimator.ofFloat(imageView,"scaleX",1f,2f,1f);
+                ObjectAnimator scaleY = ObjectAnimator.ofFloat(imageView,"scaleY",1f,2f,1f);
+                AnimatorSet animatorSet = new AnimatorSet();
+                animatorSet.setDuration(3000);
+                animatorSet.playTogether(scaleX,scaleY);
+                animatorSet.start();
+            }
+        });
     }
 
     @Override
@@ -87,7 +128,7 @@ public class MainActivity extends AppCompatActivity implements Iview{
             xRecyclerView.loadMoreComplete();
         }
     }
-    public String URL_NEWS ="http://www.xieast.com/api/news/news.php";
+    public String URL_NEWS ="http://www.xieast.com/api/news/news.php?page=";
     private void initData() {
         presenter.startRequest(URL_NEWS+page,null,NewsBean.class);
     }

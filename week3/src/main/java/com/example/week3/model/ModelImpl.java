@@ -1,16 +1,15 @@
-package com.example.moni3.model;
+package com.example.week3.model;
 
-import com.example.moni3.bean.NewsBean;
-import com.example.moni3.util.ICallBack;
-import com.example.moni3.util.OkHttpUtils;
+import com.example.week3.bean.GoodsBean;
+import com.example.week3.utils.ICallBack;
+import com.example.week3.utils.OkHttpUtil;
 
 import java.io.IOException;
-import java.util.Map;
 
-public class ModelImpl implements Imodel{
+public class ModelImpl implements Imodel {
     @Override
     public void requestData(String url, final MyCallBack myCallBack) {
-        OkHttpUtils.getInstance().doGet(url, NewsBean.class, new ICallBack() {
+        OkHttpUtil.getInstance().doGet(url, GoodsBean.class, new ICallBack() {
             @Override
             public void success(Object o) {
                 myCallBack.getData(o);

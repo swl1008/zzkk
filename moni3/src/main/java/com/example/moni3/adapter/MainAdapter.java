@@ -40,6 +40,11 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
         notifyDataSetChanged();
     }
+    public void delDate(int i) {
+        data.remove(i);
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -58,28 +63,86 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder viewHolder, final int i) {
         int type = getItemViewType(i);
         switch (type){
             case TYPE_IMAGE_ONE:
-                TheOne theOne = (TheOne) viewHolder;
+                final TheOne theOne = (TheOne) viewHolder;
                 theOne.title.setText(data.get(i).getTitle());
                 Glide.with(context).load(data.get(i).getThumbnail_pic_s()).into(theOne.image_one);
+
+                theOne.image_one.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (clickCallBack !=null){
+                            clickCallBack.setItemOnClick(theOne.image_one,i);
+                        }
+                    }
+                });
+
                 break;
             case TYPE_IMAGE_TWO:
-                TheTwo theTwo = (TheTwo) viewHolder;
+                final TheTwo theTwo = (TheTwo) viewHolder;
                 theTwo.title.setText(data.get(i).getTitle());
                 Glide.with(context).load(data.get(i).getThumbnail_pic_s()).into(theTwo.image_one);
                 Glide.with(context).load(data.get(i).getThumbnail_pic_s02()).into(theTwo.image_two);
+                theTwo.image_one.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (clickCallBack !=null){
+                            clickCallBack.setItemOnClick(theTwo.image_one,i);
+                        }
+                    }
+                });
+                theTwo.image_two.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (clickCallBack !=null){
+                            clickCallBack.setItemOnClick(theTwo.image_two,i);
+                        }
+                    }
+                });
                 break;
             case TYPE_IMAGE_THREE:
-                TheThree theThree = (TheThree) viewHolder;
+                final TheThree theThree = (TheThree) viewHolder;
                 theThree.title.setText(data.get(i).getTitle());
                 Glide.with(context).load(data.get(i).getThumbnail_pic_s()).into(theThree.image_one);
                 Glide.with(context).load(data.get(i).getThumbnail_pic_s02()).into(theThree.image_two);
                 Glide.with(context).load(data.get(i).getThumbnail_pic_s03()).into(theThree.image_three);
+                theThree.image_one.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (clickCallBack !=null){
+                            clickCallBack.setItemOnClick(theThree.image_one,i);
+                        }
+                    }
+                });
+                theThree.image_two.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (clickCallBack !=null){
+                            clickCallBack.setItemOnClick(theThree.image_two,i);
+                        }
+                    }
+                });
+                theThree.image_three.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (clickCallBack !=null){
+                            clickCallBack.setItemOnClick(theThree.image_three,i);
+                        }
+                    }
+                });
                 break;
         }
+        viewHolder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                int position = viewHolder.getLayoutPosition();
+                longClickCallBack.setLongItemOnClick(position-1);
+                return false;
+            }
+        });
     }
 
     @Override
@@ -99,6 +162,8 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public int getItemCount() {
         return data.size();
     }
+
+
 
 
     public class TheOne extends RecyclerView.ViewHolder{
@@ -140,6 +205,22 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             constraintLayout = itemView.findViewById(R.id.con);
         }
     }
+    private onClickCallBack clickCallBack;
+    public interface onClickCallBack{
+        void setItemOnClick(View item,int i);
+    }
+    public void setItemOnClickListener(onClickCallBack clickCallBack){
+        this.clickCallBack = clickCallBack;
+    }
+
+    private onLongClickCallBack longClickCallBack;
+    public interface onLongClickCallBack{
+        void setLongItemOnClick(int i);
+    }
+    public void setLongItemOnClickListener(onLongClickCallBack longClickCallBack){
+        this.longClickCallBack = longClickCallBack;
+    }
+
 }
 
 
